@@ -42,11 +42,10 @@ USER nextjs
 # Expose port (PORT will be set at runtime by Koyeb)
 EXPOSE 3000
 
-ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 
 # Start the application using PORT environment variable
+# Use shell form (sh -c) to ensure environment variable expansion
 # Next.js standalone server reads PORT from process.env automatically
-ENV PORT=3000
-CMD ["node", "server.js"]
+CMD sh -c "PORT=${PORT:-3000} node server.js"
 
