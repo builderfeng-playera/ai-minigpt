@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const AI_BUILDER_API_URL = process.env.NEXT_PUBLIC_AI_BUILDER_API_URL || "https://space.ai-builders.com/backend";
-const AI_BUILDER_TOKEN = process.env.NEXT_PUBLIC_AI_BUILDER_TOKEN || "";
+// Use AI_BUILDER_TOKEN from environment (injected by platform) or fallback to NEXT_PUBLIC_AI_BUILDER_TOKEN
+const AI_BUILDER_TOKEN = process.env.AI_BUILDER_TOKEN || process.env.NEXT_PUBLIC_AI_BUILDER_TOKEN || "";
 
 export async function POST(request: NextRequest) {
   try {
