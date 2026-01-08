@@ -35,11 +35,11 @@ RUN adduser --system --uid 1001 nextjs
 # Copy necessary files from builder
 # Create public directory (Next.js standalone mode may not have public folder)
 RUN mkdir -p ./public
-# Copy public directory if it exists (using shell to handle missing directory)
+# Copy public directory if it exists (using shell to handle missing/empty directory)
 RUN --mount=from=builder,source=/app,target=/tmp/src \
     if [ -d /tmp/src/public ] && [ "$(ls -A /tmp/src/public 2>/dev/null)" ]; then \
-        cp -r /tmp/src/public/* ./public/; \
-    fi
+        cp -r /tmp/src/public/. ./public/ 2>/dev/null || true; \
+    fi || true
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
